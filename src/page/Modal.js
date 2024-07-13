@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import caution from "../img/caution.png";
 
-const Modal = ({ state }) => {
-  const { isModalOn, setIsModalOn } = state;
+const Modal = ({ modalState, readyState, socket }) => {
+  const { isModalOn, setIsModalOn } = modalState;
+  const { ready, setReady } = readyState;
   const [countDown, setCountDown] = useState(0);
+  const [click, setClick] = useState(false);
 
   useEffect(() => {
     const countdown = setInterval(() => {
@@ -13,6 +15,13 @@ const Modal = ({ state }) => {
     }, 1000);
     return () => clearInterval(countdown);
   }, [countDown]);
+
+  useEffect(() => {
+    if (ready === 2) {
+      setCountDown(5);
+      setTimeout(() => setIsModalOn(false), 5000);
+    }
+  }, [ready, setIsModalOn]);
 
   return (
     <div
@@ -96,6 +105,18 @@ const Modal = ({ state }) => {
         style={{
           display: "flex",
           justifyContent: "center",
+          paddingBottom: "15px",
+          fontSize: "15px",
+        }}
+      >
+        <div>
+          Ready <span>{ready}</span>/2
+        </div>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
           position: "absolute",
           bottom: "30px",
           width: "100%",
@@ -106,16 +127,21 @@ const Modal = ({ state }) => {
             width: "200px",
             height: "35px",
             borderRadius: "20px",
+            backgroundColor: click ? "#F0F0F0" : "white",
             fontSize: "15px",
             border: "none",
             fontWeight: "bold",
           }}
+          disabled={click}
           onClick={() => {
-            setCountDown(5);
-            setTimeout(() => setIsModalOn(false), 5000);
+            setClick(true);
+            socket.emit("ready");
+            setReady(ready + 1);
+            // setCountDown(5);
+            // setTimeout(() => setIsModalOn(false), 5000);
           }}
         >
-          Confirm
+          Ready to Start
         </button>
       </div>
     </div>
