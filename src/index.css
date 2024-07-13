@@ -1,3 +1,4 @@
+/* 기존 스타일 */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -10,4 +11,13 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* Google Fonts 링크 추가 */
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+
+/* 에러 메시지 글씨체 스타일 */
+.error-message {
+  font-family: 'Creepster', sans-serif;
+  font-size: 24px;
 }
