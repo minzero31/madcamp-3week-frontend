@@ -51,9 +51,23 @@ const Modal = ({ state }) => {
         />
       </div>
       {countDown ? (
-        <div style={{ display: "flex" }}>
-          <div>{countDown}</div>
-          <div>s</div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            fontSize: "18px",
+            flexGrow: 0.7,
+            justifyContent: "center",
+            fontWeight: "bold",
+            gap: "20px",
+          }}
+        >
+          <div>게임이 시작됩니다.</div>
+          <div>
+            {countDown}
+            <b>s</b>
+          </div>
         </div>
       ) : (
         <div
