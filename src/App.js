@@ -6,6 +6,9 @@ import Duckpond from "./page/Duckpond"; // Duckpond 컴포넌트 임포트
 import EndingCredit from "./page/Endingcredit";
 import Errortologin from "./page/Errortologin";
 import DuckShape from "./page/DuckShape";
+import Curtainmain from "./page/Curtainmain";
+import Winner from "./page/Winner";
+import Loser from "./page/Loser";
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
         <Route path="/ending" element={<EndingCredit />} /> 
         <Route path="/errortologin" element={<Errortologin/>} />
         <Route path="/duckshape" element={<DuckShape/>} />
+        <Route path="/curtainmain" element={<Curtainmain/>} />
+        <Route path="/winner" element={<Winner/>} />
+        <Route path="/loser" element={<Loser/>} />
       </Routes>
     </BrowserRouter>
   );

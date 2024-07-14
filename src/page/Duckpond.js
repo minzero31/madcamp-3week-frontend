@@ -3,36 +3,14 @@ import duckImage from '../img/main_pond_duck.png'; // 오리 이미지 경로 �
 
 const Duckpond = () => {
   const canvasRef = useRef(null);
-  const imgRefs = useRef([null, null]); // 두 개의 오리 이미지를 담는 배열
+  const imgRef = useRef(null); // 오리 이미지 ref
+  const bubbles = useRef([]); // 버블들의 배열
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-
-    const waves = [
-      { // 첫 번째 오리 파동
-        x: canvas.width * 0.25,
-        y: canvas.height / 2,
-        radius: 0,
-        opacity: 1,
-        maxRadius: 200,
-        speed: 2,
-        waveFrequency: 1000, // 파동 생성 주기 (밀리초)
-        lastWaveTime: 0,
-      },
-      { // 두 번째 오리 파동
-        x: canvas.width * 0.75,
-        y: canvas.height / 2,
-        radius: 0,
-        opacity: 1,
-        maxRadius: 200,
-        speed: 2.5,
-        waveFrequency: 1200, // 파동 생성 주기 (밀리초)
-        lastWaveTime: 0,
-      }
-    ];
 
     const drawBackground = () => {
       ctx.fillStyle = '#FFFFFF'; // 흰 배경
@@ -46,68 +24,65 @@ const Duckpond = () => {
       ctx.restore();
     };
 
-    const createWave = (wave) => {
-      wave.waveFrequency = Math.random() * 300 + 800; // 파동 생성 주기를 랜덤으로 설정
-      wave.lastWaveTime = 0; // 마지막 파동 시간 초기화
-      wave.radius = 0; // 파동 반지름 초기화
-      wave.opacity = 1; // 파동 투명도 초기화
-    };
+    const drawBubbles = () => {
+      bubbles.current.forEach((bubble, index) => {
+        bubble.y -= 1; // 버블 위로 이동
+        bubble.radius -= 0.05; // 반지름 줄이기
+        bubble.opacity -= 0.01; // 투명도 줄이기
 
-    const drawWaves = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawBackground();
-
-      waves.forEach((wave) => {
-        if (Date.now() - wave.lastWaveTime > wave.waveFrequency) {
-          createWave(wave);
-          wave.lastWaveTime = Date.now();
-        }
-
-        if (wave.radius > wave.maxRadius) {
-          wave.opacity -= 0.02;
-          if (wave.opacity <= 0) {
-            wave.opacity = 0;
-          }
+        if (bubble.opacity <= 0) {
+          bubbles.current.splice(index, 1); // 버블이 투명해지면 배열에서 제거
         } else {
-          wave.radius += wave.speed;
+          ctx.beginPath();
+          ctx.arc(bubble.x, bubble.y, bubble.radius, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(0, 0, 255, ${bubble.opacity})`; // 파란색 버블
+          ctx.fill();
         }
-
-        ctx.beginPath();
-        ctx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2, false);
-        ctx.strokeStyle = `rgba(55, 129, 170, ${wave.opacity})`;
-        ctx.lineWidth = 2;
-        ctx.stroke();
       });
 
-      imgRefs.current.forEach((imgRef, index) => {
-        const imgWidth = 100;
-        const imgHeight = 100;
+      // 버블 생성
+      if (Math.random() > 0.95) { // 일정 확률로 버블 생성
+        bubbles.current.push({
+          x: Math.random() * canvas.width, // 랜덤한 위치에서 생성
+          y: canvas.height + 20, // 화면 아래에서 생성
+          radius: Math.random() * 10 + 5, // 랜덤한 반지름
+          opacity: 1, // 초기 투명도
+        });
+      }
+    };
+
+    const drawDuck = () => {
+      if (imgRef.current) {
+        const imgWidth = 200;
+        const imgHeight = 150;
         ctx.drawImage(
-          imgRef,
-          waves[index].x - imgWidth / 2,
-          waves[index].y - imgHeight / 2,
+          imgRef.current,
+          canvas.width / 2 - imgWidth / 2,
+          canvas.height / 2 - imgHeight / 2,
           imgWidth,
           imgHeight
         );
-      });
+      }
     };
 
     const animate = () => {
-      drawWaves();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drawBackground();
+      drawBubbles();
+      drawDuck();
       requestAnimationFrame(animate);
     };
 
-    imgRefs.current = imgRefs.current.map((_, index) => {
+    const loadImage = () => {
       const img = new Image();
       img.src = duckImage;
       img.onload = () => {
-        imgRefs.current[index] = img;
-        if (index === imgRefs.current.length - 1) {
-          animate();
-        }
+        imgRef.current = img;
+        animate();
       };
-      return img;
-    });
+    };
+
+    loadImage();
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
