@@ -5,6 +5,7 @@ export const Context = createContext();
 const AppProvider = ({ children }) => {
   const [state, setState] = useState({
     username: "",
+    userColleague: "",
   });
 
   return (
