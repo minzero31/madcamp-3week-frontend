@@ -7,8 +7,11 @@ import EndingCredit from "./page/Endingcredit";
 import Errortologin from "./page/Errortologin";
 import DuckShape from "./page/DuckShape";
 import Curtainmain from "./page/Curtainmain";
-import Winner from "./page/Winner";
-import Loser from "./page/Loser";
+import WinnerStud from "./page/WinnerStud";
+import LoserStud from "./page/LoserStud";
+import WinnerProf from "./page/WinnerProf";
+import LoserProf from "./page/LoserProf";
+import Curtain from "./page/Curtain";
 
 function App() {
   return (
@@ -22,8 +25,11 @@ function App() {
         <Route path="/errortologin" element={<Errortologin/>} />
         <Route path="/duckshape" element={<DuckShape/>} />
         <Route path="/curtainmain" element={<Curtainmain/>} />
-        <Route path="/winner" element={<Winner/>} />
-        <Route path="/loser" element={<Loser/>} />
+        <Route path="/winnerprof" element={<WinnerProf/>} />
+        <Route path="/winnerstud" element={<WinnerStud/>} />
+        <Route path="/loserprof" element={<LoserProf/>} />
+        <Route path="/loserstud" element={<LoserStud/>} />
+        <Route path="/curtain" element={<Curtain/>} />
       </Routes>
     </BrowserRouter>
   );
