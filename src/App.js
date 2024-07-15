@@ -12,6 +12,7 @@ import LoserStud from "./page/LoserStud";
 import WinnerProf from "./page/WinnerProf";
 import LoserProf from "./page/LoserProf";
 import Curtain from "./page/Curtain";
+import Ready from "./page/Ready";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Loading />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/ready" element={<Ready />} />
         <Route path="/main" element={<Main />} />
         <Route path="/duckpond" element={<Duckpond />} />
         <Route path="/ending" element={<EndingCredit />} /> 
@@ -30,6 +32,9 @@ function App() {
         <Route path="/loserprof" element={<LoserProf/>} />
         <Route path="/loserstud" element={<LoserStud/>} />
         <Route path="/curtain" element={<Curtain/>} />
+        <Route path="/ending" element={<EndingCredit />} />
+        <Route path="/errortologin" element={<Errortologin />} />
+        <Route path="/duckshape" element={<DuckShape />} />
       </Routes>
     </BrowserRouter>
   );

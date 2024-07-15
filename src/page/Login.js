@@ -20,7 +20,7 @@ const Login = () => {
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      navigate("/main");
+      navigate("/ready");
     }
   };
 
