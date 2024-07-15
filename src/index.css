@@ -14,10 +14,18 @@ code {
 }
 
 /* Google Fonts 링크 추가 */
-@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Creepster&display=swap");
 
 /* 에러 메시지 글씨체 스타일 */
 .error-message {
-  font-family: 'Creepster', sans-serif;
+  font-family: "Creepster", sans-serif;
   font-size: 24px;
+}
+
+@font-face {
+  font-family: "InkLipquid";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/InkLipquid.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
 }

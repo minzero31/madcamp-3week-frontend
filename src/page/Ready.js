@@ -26,13 +26,13 @@ const Ready = () => {
 
   const createNewRoom = () => {
     socket.emit("create_room", { username: state.username });
-    navigate("/main");
+    navigate("/flipbook");
   };
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsAnimationApplied(true);
-    }, 1500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -281,9 +281,24 @@ const Ready = () => {
                   height: "380px",
                 }}
               >
-                {roomList.map((room_name) => {
-                  return <RoomList name={room_name} />;
-                })}
+                {roomList.length !== 0 ? (
+                  roomList.map((room_name) => {
+                    return <RoomList name={room_name} />;
+                  })
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      fontFamily: "Alice, sans-serif",
+                      fontWeight: "bold",
+                      fontSize: "25px",
+                      paddingLeft: "70px",
+                      paddingTop: "150px",
+                    }}
+                  >
+                    No room created...
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -442,7 +457,7 @@ const Ready = () => {
             }}
             onClick={createNewRoom}
           >
-            Create new
+            Create New
           </button>
         </div>
       </div>
