@@ -1,8 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Loading from "./page/Loading";
 import Login from "./page/Login";
-import Main from "./page/Main";
-import Duckpond from "./page/Duckpond"; // Duckpond 컴포넌트 임포트
 import EndingCredit from "./page/Endingcredit";
 import Errortologin from "./page/Errortologin";
 import DuckShape from "./page/DuckShape";
