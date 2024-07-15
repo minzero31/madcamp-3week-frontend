@@ -44,10 +44,11 @@ const Errortologin = () => {
         box.style.opacity = `${Math.max(1 - scale / 50, 0)}`; // 글씨 점점 투명하게
         if (scale < 200) { // 확대 시간을 늘리기 위해 상한선을 높게 설정
           requestAnimationFrame(expandAnimation);
-          navigate('/login');
+          //navigate('/login');
         }
       };
       expandAnimation();
+      navigate('/login');
     }
   }, [expand, navigate]);
 
