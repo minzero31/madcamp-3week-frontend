@@ -18,14 +18,13 @@ function App() {
         <Route path="/" element={<Loading />} />
         <Route path="/login" element={<Login />} />
         <Route path="/ready" element={<Ready />} />
-        <Route path="/winnerprof" element={<WinnerProf/>} />
-        <Route path="/winnerstud" element={<WinnerStud/>} />
-        <Route path="/loserprof" element={<LoserProf/>} />
-        <Route path="/loserstud" element={<LoserStud/>} />
-        <Route path="/curtain" element={<Curtain/>} />
-        <Route path="/ending" element={<EndingCredit />} />
         <Route path="/flipbook" element={<FlipBook />} />
         <Route path="/waiting" element={<Waiting />} />
+        <Route path="/curtain" element={<Curtain />} />
+        <Route path="/winnerprof" element={<WinnerProf />} />
+        <Route path="/winnerstud" element={<WinnerStud />} />
+        <Route path="/loserprof" element={<LoserProf />} />
+        <Route path="/loserstud" element={<LoserStud />} />
         <Route path="/endingcredit" element={<EndingCredit />} />
       </Routes>
     </BrowserRouter>
