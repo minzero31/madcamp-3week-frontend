@@ -13,6 +13,8 @@ import grad_skku from '../img/grad_skku.png';
 import grad_smwu from '../img/grad_smwu.png';
 import winnerstud from '../img/winnerstud_ending.png';
 import winnerstage from '../img/winnerstage.png';
+import curtainImg from "../img/curtain.png";
+import curtainImg2 from "../img/curtain_2.png";
 
 const WinnerStud = () => {
   const { state } = useContext(Context); // Use the context to get state
@@ -138,6 +140,38 @@ const WinnerStud = () => {
           }}
         />
       </div>
+      {state.curtainMotion && (
+        <>
+          <img
+            className="animate__animated animate__bounceInLeft"
+            src={curtainImg}
+            style={{
+              position: "fixed",
+              top: '40%',
+              left: '10%',
+              height: "100%",
+              width: "50%",
+              zIndex: 5, // Higher z-index to ensure it's on top
+              animationDelay: '3s', // Adjust delay to ensure it comes after the other animations
+              animationFillMode: 'both'
+            }}
+          />
+          <img
+            className="animate__animated animate__bounceInRight"
+            src={curtainImg2}
+            style={{
+              position: "fixed",
+              top: 0,
+              right: 0,
+              height: "100%",
+              width: "50%",
+              zIndex: 5, // Higher z-index to ensure it's on top
+              animationDelay: '3s', // Adjust delay to ensure it comes after the other animations
+              animationFillMode: 'both'
+            }}
+          />
+        </>
+      )}
       <style>
         {`
           @keyframes tilt-in-fwd-tr {
