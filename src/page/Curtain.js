@@ -11,7 +11,6 @@ import curtainImg from "../img/curtain.png";
 import curtainImg2 from "../img/curtain_2.png";
 import hill from "../img/hill.png";
 import { Context } from "../AppProvider";
-import { FcDataBackup } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 
 const Curtain = () => {
@@ -26,6 +25,31 @@ const Curtain = () => {
   } else {
     index = 1;
   }
+
+  const [musicPlaying, setMusicPlaying] = useState(false);
+
+  useEffect(() => {
+    // 화면이 처음 마운트 될 때 음악을 재생
+    setMusicPlaying(true);
+
+    return () => {
+      // 컴포넌트가 unmount 될 때 음악을 멈춤
+      setMusicPlaying(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    const audio = new Audio("/mainmusic.mp3");
+    if (musicPlaying) {
+      audio.play();
+    } else {
+      audio.pause();
+    }
+
+    return () => {
+      audio.pause();
+    };
+  }, [musicPlaying]);
 
   useEffect(() => {
     console.log(`bombTimer: ${bombTimer}, amIHoldBomb: ${amIHoldBomb}`);
