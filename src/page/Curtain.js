@@ -35,7 +35,7 @@ const Curtain = () => {
   useEffect(() => {
     setTimeout(() => {
       setHillMotion(true);
-    }, 3200);
+    }, 3500);
     setTimeout(() => {
       setCurtainMotion(true);
     }, 2500);
@@ -367,24 +367,31 @@ const Curtain = () => {
             paddingLeft: "33px",
           }}
         >
-          <div style={{ display: "flex", paddingLeft: "50px" }}>
-            <div
-              style={{
-                backgroundColor: "black",
-                height: "580px",
-                width: "5px",
-              }}
-            ></div>
-          </div>
-          <img
-            src={stud_f}
-            alt="stud_f"
+          <div
             style={{
-              width: "250px",
-              position: "absolute",
-              top: "420px",
+              WebkitAnimation: "vibrate-1 0.3s linear infinite both",
+              animation: "vibrate-1 0.3s linear infinite both",
             }}
-          />
+          >
+            <div style={{ display: "flex", paddingLeft: "50px" }}>
+              <div
+                style={{
+                  backgroundColor: "black",
+                  height: "580px",
+                  width: "5px",
+                }}
+              ></div>
+            </div>
+            <img
+              src={stud_f}
+              alt="stud_f"
+              style={{
+                width: "250px",
+                position: "absolute",
+                top: "420px",
+              }}
+            />
+          </div>
         </div>
       )}
       {showDuckProf && (

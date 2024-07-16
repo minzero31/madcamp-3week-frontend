@@ -1,15 +1,12 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TbDoorEnter } from "react-icons/tb";
 import stage from "../img/stage.png";
 import duck from "../img/duck.png";
 import { useNavigate } from "react-router-dom";
-import { io } from "socket.io-client";
 import { Context } from "../AppProvider";
 
-const socket = io("http://172.10.7.127");
-
 const Ready = () => {
-  const { state, setState } = useContext(Context);
+  const { state, setState, socket } = useContext(Context);
   const navigate = useNavigate();
   const [isAnimationApplied, setIsAnimationApplied] = useState(false);
   const [roomList, setRoomList] = useState([]);
@@ -23,13 +20,37 @@ const Ready = () => {
       setRoomList(data.room_list);
     });
 
+    socket.on("join_room_success", (data) => {
+      console.log(`Successfully joined ${data.roomName}'s room`);
+      // Navigate to the game screen or perform other actions
+      navigate("/flipbook"); // Change '/game' to your game screen route
+    });
+
+    socket.on("join_room_failed", (data) => {
+      alert(data.message);
+    });
+
     // When the component mounts, request the current room list
     socket.emit("get_room_list");
   }, []);
 
   const createNewRoom = () => {
-    socket.emit("create_room", { username: state.username });
+    setState({ ...state, roomOwner: state.username });
+    socket.emit("create_room", {
+      username: state.username,
+      ownerSid: state.sid,
+    });
     navigate("/flipbook");
+  };
+
+  const joinRoom = (roomName) => {
+    setState({ ...state, roomOwner: roomName });
+    socket.emit("join_room", {
+      roomName,
+      username: state.username,
+      guestSid: state.sid,
+    });
+    // Implement navigation or other actions after joining a room if needed
   };
 
   useEffect(() => {
@@ -63,7 +84,12 @@ const Ready = () => {
         >
           {name} 's room
         </div>
-        <div style={{ position: "absolute", right: 20 }}>
+        <div
+          style={{ position: "absolute", right: 20, cursor: "pointer" }}
+          onClick={() => {
+            joinRoom(name);
+          }}
+        >
           <TbDoorEnter size={"25"} />
         </div>
       </div>
