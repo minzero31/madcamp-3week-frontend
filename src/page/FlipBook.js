@@ -1,12 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import $ from "jquery";
 import "turn.js";
+import comic1 from "../img/comic1.png";
+import comic2 from "../img/comic2.png";
+import comic3 from "../img/comic3.png";
+import comic4 from "../img/comic4.png";
 import { useNavigate } from "react-router-dom";
+import { Context } from "../AppProvider";
 
 const FlipBook = () => {
+  const { state, setState, socket } = useContext(Context);
   const [onMouse, setOnMouse] = useState(false);
   const flipbookRef = useRef(null);
   const navigate = useNavigate();
+  let index;
+  if (state.username === state.roomOwner) {
+    index = 0;
+  } else {
+    index = 1;
+  }
+  // 0이 학생
 
   useEffect(() => {
     // jQuery와 turn.js를 전역 범위에서 사용할 수 있도록 설정
@@ -114,10 +127,24 @@ const FlipBook = () => {
               </span>
             </div>
           </div>
-          <div style={pageStyle}>두 번째 페이지</div>
-          <div style={pageStyle}>세 번째 페이지</div>
-          <div style={pageStyle}>네 번째 페이지</div>
-          <div style={pageStyle}>다섯 번째 페이지</div>
+          <div style={pageStyle}>
+            <img src={comic1} alt="comic1" style={{ width: "80%" }} />
+          </div>
+          <div style={pageStyle}>
+            <img src={comic2} alt="comic1" style={{ width: "80%" }} />
+          </div>
+          <div style={pageStyle}>
+            <img src={comic3} alt="comic1" style={{ width: "80%" }} />
+          </div>
+          <div style={pageStyle}>
+            <img src={comic4} alt="comic1" style={{ width: "80%" }} />
+          </div>
+          <div style={pageStyle}>
+            <div>
+              당신은
+              {index === 0 ? "학생" : "교수"} 입니다.
+            </div>
+          </div>
           <div style={pageStyle}>
             <div
               style={{
