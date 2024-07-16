@@ -1,4 +1,5 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
+import socket from "./socket";
 
 export const Context = createContext();
 
@@ -6,10 +7,26 @@ const AppProvider = ({ children }) => {
   const [state, setState] = useState({
     username: "",
     userColleague: "",
+    roomOwner: "",
+    sid: "",
   });
 
+  useEffect(() => {
+    socket.on("receive_sid", (data) => {
+      setState((prevState) => ({ ...prevState, sid: data.sid }));
+    });
+  }, []);
+
+  useEffect(() => {
+    if (state.sid) {
+      alert(state.sid);
+    }
+  }, [state.sid]);
+
   return (
-    <Context.Provider value={{ state, setState }}>{children}</Context.Provider>
+    <Context.Provider value={{ state, setState, socket }}>
+      {children}
+    </Context.Provider>
   );
 };
 
