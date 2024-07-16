@@ -9,6 +9,15 @@ const EndingCredit = () => {
   const [user, setUser] = React.useState("");
 
   useEffect(() => {
+    const audio = new Audio("/endingmusic.mp3");
+    audio.play();
+
+    return () => {
+      audio.pause();
+    };
+  }, []);
+
+  useEffect(() => {
     if (location.state && location.state.username) {
       setUser(location.state.username);
     }
@@ -38,7 +47,7 @@ const EndingCredit = () => {
       text: credit,
       opacity: 1 - index * 0.1,
       y: canvas.height + index * 30 + 20,
-      speed: 2.0,
+      speed: 1.5,
     }));
 
     const animate = () => {
