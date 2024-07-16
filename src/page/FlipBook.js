@@ -63,6 +63,7 @@ const FlipBook = () => {
   }, []);
 
   const handleButtonClick = () => {
+    navigate("/waiting");
     const audio = audioRef.current;
     if (audio) {
       let volume = audio.volume;
@@ -74,7 +75,6 @@ const FlipBook = () => {
           clearInterval(fadeOut);
           audio.pause();
           audio.currentTime = 0;
-          navigate("/waiting");
         }
       }, 50); // 50ms마다 볼륨 감소
     }
