@@ -1,4 +1,8 @@
 import React, { useEffect, useRef } from 'react';
+import 'animate.css';
+import f_score from '../img/f_score.png';
+import loserstud from '../img/loserstud_ending.png';
+import laptop from '../img/laptop.png';
 
 const Loser = () => {
   const canvasRef = useRef(null);
@@ -61,21 +65,89 @@ const Loser = () => {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
       <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }} />
-      <div style={{ width: '200px', height: '70px', border:'4px solid black', backgroundColor: 'white', position: 'absolute', bottom: '50px', left: 'calc(50% - 100px)' }}>
-        {/* 갈색 박스 */}
+      <div
+        style={{
+          width: '250px',
+          height: '300px',
+          position: 'absolute',
+          right: '300px',
+          top: '30%',
+          transform: 'translateY(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          animation: 'tilt-in-fwd-tr 1s ease forwards',
+          animationDelay: '3s',
+          animationFillMode: 'both'
+        }}
+      >
+        <img
+          src={f_score}
+          alt="F Score"
+          style={{
+            width: '80%',
+            height: '80%',
+          }}
+        />
       </div>
-      <div style={{ position: 'absolute', bottom: '20px', left: 'calc(50% - 150px)', width: '300px', height: '50px', backgroundColor: 'black' }}>
-        {/* 검정색 박스 */}
-      </div>
-      <div style={{ width: '250px', height: '300px', border: '4px solid black', backgroundColor: 'beige', position: 'absolute', right: '300px', top: '50%', transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {/* 네모난 박스 */}
-        <div style={{ color: 'black', fontSize: '30px', marginTop: '20px' }}>성적표</div>
-        <div style={{ color: 'red', fontSize: '90px', fontWeight: 'bold', marginTop: 'auto', marginBottom: 'auto' }}>F</div>
-        <div style={{ color: 'black', fontSize: '20px', marginBottom: '20px' }}>00대학교</div>
-      </div>
-      <div style={{ position: 'absolute', bottom: '10px', left: '0', width: '100%', height: '2px', backgroundColor: 'black' }}>
-        {/* 검정색 가로선 */}
-      </div>
+      <img
+        src={laptop}
+        alt="Laptop"
+        className="animate__animated animate__bounceInUp"
+        style={{
+          position: 'absolute',
+          bottom: '22%',
+          left: '400px',  // Adjusted to place the laptop to the left of the loserstud image
+          width: '230px',
+          height: 'auto',
+          zIndex: 2,
+          animationDelay: '2s',
+          animationFillMode: 'both'
+        }}
+      />
+      <img
+        src={loserstud}
+        alt="Loser Student"
+        className="animate__animated animate__bounceInDown"
+        style={{
+          position: 'absolute',
+          bottom: '22%',
+          left: '630px',
+          width: '230px',
+          height: 'auto',
+          zIndex: 2,
+          animationDelay: '3s',
+          animationFillMode: 'both'
+        }}
+      />
+      <div
+        style={{
+          width: '300px',
+          height: '360px',
+          position: 'absolute',
+          right: '200px',
+          top: '40%',
+          transform: 'translateY(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          zIndex: 1,
+        }}
+      ></div>
+      <style>
+        {`
+          @keyframes tilt-in-fwd-tr {
+            0% {
+              transform: rotateY(30deg) rotateX(30deg) translateY(-300px) translateZ(-500px);
+              opacity: 0;
+            }
+            100% {
+              transform: rotateY(0deg) rotateX(0deg) translateY(0) translateZ(0);
+              opacity: 1;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };

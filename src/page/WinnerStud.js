@@ -1,44 +1,159 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import Confetti from 'canvas-confetti';
+import 'animate.css';
+import { Context } from '../AppProvider'; // Import the context
+import grad_dgist from '../img/grad_dgist.png';
+import grad_ehwu from '../img/grad_ehwu.png';
+import grad_gist from '../img/grad_gist.png';
+import grad_hyu from '../img/grad_hyu.png';
+import grad_jnu from '../img/grad_jnu.png';
+import grad_kaist from '../img/grad_kaist.png';
+import grad_pnu from '../img/grad_pnu.png';
+import grad_skku from '../img/grad_skku.png';
+import grad_smwu from '../img/grad_smwu.png';
+import winnerstud from '../img/winnerstud_ending.png';
+import winnerstage from '../img/winnerstage.png';
 
-const Winner = () => {
+const WinnerStud = () => {
+  const { state } = useContext(Context); // Use the context to get state
+
   useEffect(() => {
-    // 컨페티 효과를 4초마다 한 번씩 터지도록 설정
+    // Confetti effect every 4 seconds
     const interval = setInterval(() => {
       Confetti({
-        particleCount: 130,
-        spread: 130,
-        origin: { y: 0.5 } // 화면 높이의 중앙에 위치
+        particleCount: 150,
+        spread: 150,
+        origin: { y: 0.5 } // Center of the screen height
       });
-    }, 4000);
+    }, 3000);
 
-    // 3번 반복 후 clearInterval을 통해 interval을 정리
+    // Clear interval after 3 repetitions
     setTimeout(() => {
       clearInterval(interval);
-    }, 12000); // 4초 간격으로 3번 반복 (4초 * 3번 = 12초)
+    }, 15000); // 4 seconds interval for 3 times (4s * 3 = 12s)
 
-    return () => clearInterval(interval); // 컴포넌트 언마운트 시 clearInterval
+    return () => clearInterval(interval); // Clear interval on component unmount
   }, []);
+
+  // Determine the graduation image based on the userColleague value
+  let gradImage;
+  switch (state.userColleague) {
+    case 'DGIST':
+      gradImage = grad_dgist;
+      break;
+    case '이화여자대학교':
+      gradImage = grad_ehwu;
+      break;
+    case 'GIST':
+      gradImage = grad_gist;
+      break;
+    case '한양대학교':
+      gradImage = grad_hyu;
+      break;
+    case '전남대학교':
+      gradImage = grad_jnu;
+      break;
+    case 'KAIST':
+      gradImage = grad_kaist;
+      break;
+    case '부산대학교':
+      gradImage = grad_pnu;
+      break;
+    case '성균관대학교':
+      gradImage = grad_skku;
+      break;
+    case '숙명여자대학교':
+      gradImage = grad_smwu;
+      break;
+    default:
+      gradImage = grad_kaist; // Default image
+  }
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-      <div style={{ width: '200px', height: '70px', border:'4px solid black', backgroundColor: 'white', position: 'absolute', bottom: '50px', left: 'calc(50% - 100px)' }}>
-        {/* 갈색 박스 */}
+      <div
+        className="animate__animated animate__bounceInUp"
+        style={{
+          position: 'absolute',
+          bottom: '0',
+          width: '100%',
+          height: '25%',
+          backgroundColor: 'black',
+          zIndex: 0,
+        }}
+      ></div>
+      <img
+        src={winnerstage}
+        alt="Winner Stage"
+        className="animate__animated animate__bounceInUp"
+        style={{
+          position: 'absolute',
+          bottom: '20px',
+          left: '450px',
+          width: '600px',
+          height: '230px',
+          zIndex: 1,
+          animationDelay: '1s',
+          animationFillMode: 'both'
+        }}
+      />
+      <img
+        src={winnerstud}
+        alt="Winner Student"
+        className="animate__animated animate__bounceInDown"
+        style={{
+          position: 'absolute',
+          bottom: '22%',
+          left: '630px',
+          width: '230px',
+          height: 'auto',
+          zIndex: 2,
+          animationDelay: '2s',
+          animationFillMode: 'both'
+        }}
+      />
+      <div
+        style={{
+          width: '300px',
+          height: '360px',
+          position: 'absolute',
+          right: '200px',
+          top: '40%',
+          transform: 'translateY(-50%)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          zIndex: 1,
+        }}
+      >
+        <img
+          src={gradImage} // Use the determined image
+          alt="Graduation"
+          style={{
+            width: '80%',
+            height: '80%',
+            animation: 'tilt-in-fwd-tr 1s ease forwards',
+            animationDelay: '4s',
+            animationFillMode: 'both'
+          }}
+        />
       </div>
-      <div style={{ position: 'absolute', bottom: '20px', left: 'calc(50% - 150px)', width: '300px', height: '50px', backgroundColor: 'black' }}>
-        {/* 검정색 박스 */}
-      </div>
-      <div style={{ width: '250px', height: '300px', border: '4px solid black', backgroundColor: 'beige', position: 'absolute', right: '300px', top: '50%', transform: 'translateY(-50%)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {/* 네모난 박스 */}
-        <div style={{ color: 'black', fontSize: '30px', marginTop: '20px' }}>성적표</div>
-        <div style={{ color: 'blue', fontSize: '90px', fontWeight: 'bold', marginTop: 'auto', marginBottom: 'auto' }}>A+</div>
-        <div style={{ color: 'black', fontSize: '20px', marginBottom: '20px' }}>00대학교</div>
-      </div>
-      <div style={{ position: 'absolute', bottom: '10px', left: '0', width: '100%', height: '2px', backgroundColor: 'black' }}>
-        {/* 검정색 가로선 */}
-      </div>
+      <style>
+        {`
+          @keyframes tilt-in-fwd-tr {
+            0% {
+              transform: rotateY(30deg) rotateX(30deg) translateY(-300px) translateZ(-500px);
+              opacity: 0;
+            }
+            100% {
+              transform: rotateY(0deg) rotateX(0deg) translateY(0) translateZ(0);
+              opacity: 1;
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };
 
-export default Winner;
+export default WinnerStud;

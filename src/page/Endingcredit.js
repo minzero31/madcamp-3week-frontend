@@ -24,38 +24,45 @@ const EndingCredit = () => {
       "Producer - ha",
       "Director - haha",
       "Developer - jimini, minzero",
-      "Special thanx to : dk & class 4 & GPT",
+      "Special thanx to : class 4 & GPT",
       "Graphic Designer - hahaha",
-      "Sound Designer - hahahaha",
-      "Editor - hahahahaha",
+      "Sound Engineer - hahahaha",
       "Casting Director - hahahahaha",
       "Camera Operator - hahahahahahahah",
-      "WOWOWOW : " + user,
+      "WOWOWOW : " + user.state,
+      "Prof : ",
+      "Student : "
     ];
 
     const creditPositions = credits.map((credit, index) => ({
       text: credit,
       opacity: 1 - index * 0.1,
       y: canvas.height + index * 30 + 20,
-      speed: 1.0,
+      speed: 2.0,
     }));
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      let allCreditsOffScreen = true;
+
       creditPositions.forEach((credit, index) => {
         credit.y -= credit.speed;
-        ctx.fillStyle = "white"; // 흰색으로 설정
-        ctx.font = "20px Arial";
+        ctx.fillStyle = "white"; // Set to white
+        ctx.font = "28px Arial";
         ctx.fillText(credit.text, canvas.width / 2 - 200, credit.y);
 
-        if (credit.y < -30) {
-          setTimeout(() => {
-            // navigate('/errortologin');
-          }, 8000); // 3초 후에 '/' 경로로 이동
+        if (credit.y > -30) {
+          allCreditsOffScreen = false;
         }
       });
 
-      requestAnimationFrame(animate);
+      if (allCreditsOffScreen) {
+        setTimeout(() => {
+          navigate('/login');
+        }, 3000); // Navigate to '/login' after 3 seconds
+      } else {
+        requestAnimationFrame(animate);
+      }
     };
 
     animate();
