@@ -3,6 +3,10 @@ import { Context } from "../AppProvider";
 import { useNavigate } from "react-router-dom";
 import Ticket from "./Ticket";
 import { FaScissors } from "react-icons/fa6";
+import loginDuck from "../img/loginDuck.png";
+import loginStudent from "../img/loginStudent.png";
+import loginProfessor from "../img/loginProfessor.png";
+import loginUser from "../img/loginUser.png";
 import "animate.css";
 
 const Login = () => {
@@ -262,9 +266,21 @@ const Login = () => {
                           height: "135px",
                           border: "3px solid black",
                           position: "relative",
+                          justifyContent: "center", // 수평 중앙 정렬
+                          alignItems: "flex-end", // 수직 아래 정렬
                         }}
                       >
-                        사진
+                        <img
+                          src={loginUser}
+                          alt="loginUser"
+                          style={{
+                            position: "absolute",
+                            left: "0px",
+                            width: "120px",
+                            height: "80%",
+                            objectFit: "cover",
+                          }}
+                        />
                         <div style={{ position: "absolute", bottom: 5 }}>
                           <input
                             placeholder="Write your Colleague"
@@ -328,9 +344,20 @@ const Login = () => {
                           backgroundColor: "white",
                           height: "125px",
                           border: "3px solid black",
+                          display: "flex",
+                          justifyContent: "center", // 수평 중앙 정렬
+                          alignItems: "flex-end", // 수직 아래 정렬
                         }}
                       >
-                        사진
+                        <img
+                          src={loginProfessor}
+                          alt="loginProfessor"
+                          style={{
+                            width: "80%",
+                            height: "80%",
+                            objectFit: "cover",
+                          }}
+                        />
                       </div>
                       <div
                         style={{
@@ -348,9 +375,20 @@ const Login = () => {
                           backgroundColor: "white",
                           height: "125px",
                           border: "3px solid black",
+                          display: "flex",
+                          justifyContent: "center", // 수평 중앙 정렬
+                          alignItems: "flex-end", // 수직 아래 정렬
                         }}
                       >
-                        사진
+                        <img
+                          src={loginStudent}
+                          alt="loginStudent"
+                          style={{
+                            width: "80%",
+                            height: "80%",
+                            objectFit: "cover",
+                          }}
+                        />
                       </div>
                       <div
                         style={{
@@ -376,9 +414,22 @@ const Login = () => {
                           backgroundColor: "white",
                           height: "125px",
                           border: "3px solid black",
+                          display: "flex",
+                          alignItems: "flex-end", // 수직 아래 정렬
+                          position: "relative",
                         }}
                       >
-                        사진
+                        <img
+                          src={loginDuck}
+                          alt="loginProfessor"
+                          style={{
+                            position: "absolute",
+                            left: "0px",
+                            width: "120px",
+                            height: "80%",
+                            objectFit: "cover",
+                          }}
+                        />
                       </div>
                       <div
                         style={{
@@ -387,7 +438,7 @@ const Login = () => {
                           textAlign: "center",
                         }}
                       >
-                        Kaist goose 1
+                        Kaist Goose 1
                       </div>
                     </div>
                     <div style={{ width: "120px" }}>
@@ -396,9 +447,22 @@ const Login = () => {
                           backgroundColor: "white",
                           height: "125px",
                           border: "3px solid black",
+                          display: "flex",
+                          alignItems: "flex-end", // 수직 아래 정렬
+                          position: "relative",
                         }}
                       >
-                        사진
+                        <img
+                          src={loginDuck}
+                          alt="loginProfessor"
+                          style={{
+                            position: "absolute",
+                            left: "0px",
+                            width: "120px",
+                            height: "80%",
+                            objectFit: "cover",
+                          }}
+                        />
                       </div>
                       <div
                         style={{
@@ -407,7 +471,7 @@ const Login = () => {
                           textAlign: "center",
                         }}
                       >
-                        Kaist goose 2
+                        Kaist Goose 2
                       </div>
                     </div>
                   </div>

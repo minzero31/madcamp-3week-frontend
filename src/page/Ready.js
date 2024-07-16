@@ -22,6 +22,9 @@ const Ready = () => {
     socket.on("room_list_updated", (data) => {
       setRoomList(data.room_list);
     });
+
+    // When the component mounts, request the current room list
+    socket.emit("get_room_list");
   }, []);
 
   const createNewRoom = () => {
