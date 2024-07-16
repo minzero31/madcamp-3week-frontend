@@ -64,9 +64,9 @@ const Curtain = () => {
     socket.on("bomb_holder_updated", (data) => {
       setAmIHoldBomb(data.gameInfo[index]);
       setBombMove(data.bombMove);
-      if (bombTimer < data.bombTimer) {
-        setBombTimer(data.bombTimer);
-      }
+      // if (bombTimer < data.bombTimer) {
+      //   setBombTimer(data.bombTimer);
+      // }
     });
   }, []);
 
