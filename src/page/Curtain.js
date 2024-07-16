@@ -17,8 +17,28 @@ const Curtain = () => {
   const navigate = useNavigate();
   const { state, setState, socket } = useContext(Context);
   const [amIHoldBomb, setAmIHoldBomb] = useState();
-  const [bombMove, setBombMove] = useState(null);
+  const [bombMove, setBombMove] = useState(false);
   const [bombTimer, setBombTimer] = useState(60);
+  const [changeListener, setChangeListener] = useState(0);
+
+  const [studentAnimation, setStudentAnimation] = useState("");
+  const [professorAnimation, setProfessorAnimation] = useState("");
+  const [pictureChange, setPictureChange] = useState(null);
+
+  const studentAnimationHandler = (inAnimation) => {
+    setStudentAnimation(
+      inAnimation ? "animate__bounceInLeft" : "animate__bounceOutLeft"
+    );
+    console.log("studentAnimationHandler");
+  };
+
+  const professorAnimationHandler = (inAnimation) => {
+    setProfessorAnimation(
+      inAnimation ? "animate__bounceInRight" : "animate__bounceOutRight"
+    );
+    console.log("professorAnimationHandler");
+  };
+
   let index;
   if (state.username === state.roomOwner) {
     index = 0;
@@ -64,6 +84,18 @@ const Curtain = () => {
     socket.on("bomb_holder_updated", (data) => {
       setAmIHoldBomb(data.gameInfo[index]);
       setBombMove(data.bombMove);
+      setTimeout(() => {
+        setPictureChange(data.bombMove);
+      }, 500);
+      setChangeListener((prev) => prev + 1);
+
+      studentAnimationHandler(false);
+      professorAnimationHandler(false);
+
+      setTimeout(() => {
+        studentAnimationHandler(true);
+        professorAnimationHandler(true);
+      }, 1000);
       // if (bombTimer < data.bombTimer) {
       //   setBombTimer(data.bombTimer);
       // }
@@ -107,9 +139,11 @@ const Curtain = () => {
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Enter") {
-        socket.emit("exchange_bomb", {
-          roomOwner: state.roomOwner,
-        });
+        if (amIHoldBomb) {
+          socket.emit("exchange_bomb", {
+            roomOwner: state.roomOwner,
+          });
+        }
       }
     };
 
@@ -118,7 +152,7 @@ const Curtain = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [amIHoldBomb]);
 
   const redCanvasRef = useRef(null);
   const skyCanvasRef = useRef(null);
@@ -442,12 +476,13 @@ const Curtain = () => {
           }}
         >
           <div
-            style={{
-              WebkitAnimation: bombMove
-                ? ""
-                : "vibrate-1 0.3s linear infinite both",
-              animation: bombMove ? "" : "vibrate-1 0.3s linear infinite both",
-            }}
+            class={`animate__animated ${professorAnimation}`}
+            // style={{
+            //   WebkitAnimation: bombMove
+            //     ? ""
+            //     : "vibrate-1 0.3s linear infinite both",
+            //   animation: bombMove ? "" : "vibrate-1 0.3s linear infinite both",
+            // }}
           >
             <div style={{ display: "flex", paddingLeft: "120px" }}>
               <div
@@ -459,7 +494,7 @@ const Curtain = () => {
               ></div>
             </div>
             <img
-              src={bombMove ? prof_a : prof_f}
+              src={pictureChange ? prof_a : prof_f}
               alt="prof_a"
               style={{
                 width: "400px",
@@ -485,12 +520,13 @@ const Curtain = () => {
           }}
         >
           <div
-            style={{
-              WebkitAnimation: bombMove
-                ? "vibrate-1 0.3s linear infinite both"
-                : "",
-              animation: bombMove ? "vibrate-1 0.3s linear infinite both" : "",
-            }}
+            class={`animate__animated ${studentAnimation}`}
+            // style={{
+            //   WebkitAnimation: bombMove
+            //     ? "vibrate-1 0.3s linear infinite both"
+            //     : "",
+            //   animation: bombMove ? "vibrate-1 0.3s linear infinite both" : "",
+            // }}
           >
             <div style={{ display: "flex", paddingLeft: "50px" }}>
               <div
@@ -502,7 +538,7 @@ const Curtain = () => {
               ></div>
             </div>
             <img
-              src={bombMove ? stud_f : stud_a}
+              src={pictureChange ? stud_f : stud_a}
               alt="stud_f"
               style={{
                 width: "250px",
