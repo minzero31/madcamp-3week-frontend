@@ -20,6 +20,15 @@ const WinnerStud = () => {
   const { state } = useContext(Context); // Use the context to get state
 
   useEffect(() => {
+    const audio = new Audio("/winnermusic.mp3");
+    audio.play();
+
+    return () => {
+      audio.pause();
+    };
+  }, []);
+
+  useEffect(() => {
     // Confetti effect every 4 seconds
     const interval = setInterval(() => {
       Confetti({

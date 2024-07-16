@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import loserprof from '../img/loserprof.jpg'; // 경로를 실제 이미지 경로에 맞게 조정하세요
 
 const LoserProf = () => {
+  useEffect(() => {
+    const audio = new Audio("/losermusic.mp3");
+    audio.play();
+
+    return () => {
+      audio.pause();
+    };
+  }, []);
+
   return (
     <div style={styles.container}>
       <div style={styles.box}>
