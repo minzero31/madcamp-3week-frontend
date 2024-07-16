@@ -150,7 +150,7 @@ const FlipBook = () => {
                   color: onMouse ? "white" : "black",
                 }}
                 onClick={() => {
-                  navigate("/curtain");
+                  navigate("/waiting");
                 }}
                 onMouseOver={() => {
                   setOnMouse(true);

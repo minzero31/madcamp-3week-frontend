@@ -9,6 +9,7 @@ import LoserProf from "./page/LoserProf";
 import Curtain from "./page/Curtain";
 import Ready from "./page/Ready";
 import FlipBook from "./page/FlipBook";
+import Waiting from "./page/Waiting";
 
 function App() {
   return (
@@ -17,7 +18,6 @@ function App() {
         <Route path="/" element={<Loading />} />
         <Route path="/login" element={<Login />} />
         <Route path="/ready" element={<Ready />} />
-        <Route path="/ending" element={<EndingCredit />} /> 
         <Route path="/winnerprof" element={<WinnerProf/>} />
         <Route path="/winnerstud" element={<WinnerStud/>} />
         <Route path="/loserprof" element={<LoserProf/>} />
@@ -25,6 +25,8 @@ function App() {
         <Route path="/curtain" element={<Curtain/>} />
         <Route path="/ending" element={<EndingCredit />} />
         <Route path="/flipbook" element={<FlipBook />} />
+        <Route path="/waiting" element={<Waiting />} />
+        <Route path="/endingcredit" element={<EndingCredit />} />
       </Routes>
     </BrowserRouter>
   );
