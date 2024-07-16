@@ -17,12 +17,6 @@ const AppProvider = ({ children }) => {
     });
   }, []);
 
-  useEffect(() => {
-    if (state.sid) {
-      alert(state.sid);
-    }
-  }, [state.sid]);
-
   return (
     <Context.Provider value={{ state, setState, socket }}>
       {children}

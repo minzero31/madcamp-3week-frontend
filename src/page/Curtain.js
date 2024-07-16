@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import cloud from "../img/white_cloud.png";
 import sun from "../img/sun.png";
 import prof_a from "../img/a_professor.png";
@@ -10,8 +10,92 @@ import stud_duck from "../img/duck_leg_stud.png";
 import curtainImg from "../img/curtain.png";
 import curtainImg2 from "../img/curtain_2.png";
 import hill from "../img/hill.png";
+import { Context } from "../AppProvider";
+import { FcDataBackup } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 const Curtain = () => {
+  const navigate = useNavigate();
+  const { state, setState, socket } = useContext(Context);
+  const [amIHoldBomb, setAmIHoldBomb] = useState();
+  const [bombMove, setBombMove] = useState(null);
+  const [bombTimer, setBombTimer] = useState(60);
+  let index;
+  if (state.username === state.roomOwner) {
+    index = 0;
+  } else {
+    index = 1;
+  }
+
+  useEffect(() => {
+    console.log(`bombTimer: ${bombTimer}, amIHoldBomb: ${amIHoldBomb}`);
+    console.log(index);
+  }, [bombTimer, amIHoldBomb]);
+
+  useEffect(() => {
+    socket.emit("get_bomb_holder", {
+      roomOwner: state.roomOwner,
+    });
+
+    socket.on("bomb_holder_updated", (data) => {
+      setAmIHoldBomb(data.gameInfo[index]);
+      setBombMove(data.bombMove);
+      if (bombTimer < data.bombTimer) {
+        setBombTimer(data.bombTimer);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    let timer;
+    if (bombTimer !== null && bombTimer > 0) {
+      timer = setInterval(() => {
+        setBombTimer((prevTimer) => {
+          if (prevTimer <= 1) {
+            clearInterval(timer);
+            if (amIHoldBomb) {
+              if (index === 0) {
+                navigate("/loserstud");
+              }
+              if (index === 1) {
+                navigate("/loserprof");
+              }
+            } else {
+              if (index === 0) {
+                navigate("/winnerstud");
+              }
+              if (index === 1) {
+                navigate("/winnerprof");
+              }
+            }
+            return 0;
+          }
+          return prevTimer - 1;
+        });
+      }, 1000);
+    }
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [bombTimer, amIHoldBomb]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter") {
+        socket.emit("exchange_bomb", {
+          roomOwner: state.roomOwner,
+        });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   const redCanvasRef = useRef(null);
   const skyCanvasRef = useRef(null);
   const blackCanvasRef = useRef(null);
@@ -333,24 +417,33 @@ const Curtain = () => {
             paddingLeft: "33px",
           }}
         >
-          <div style={{ display: "flex", paddingLeft: "120px" }}>
-            <div
-              style={{
-                backgroundColor: "black",
-                height: "580px",
-                width: "5px",
-              }}
-            ></div>
-          </div>
-          <img
-            src={prof_a}
-            alt="prof_a"
+          <div
             style={{
-              width: "400px",
-              position: "absolute",
-              top: "400px",
+              WebkitAnimation: bombMove
+                ? ""
+                : "vibrate-1 0.3s linear infinite both",
+              animation: bombMove ? "" : "vibrate-1 0.3s linear infinite both",
             }}
-          />
+          >
+            <div style={{ display: "flex", paddingLeft: "120px" }}>
+              <div
+                style={{
+                  backgroundColor: "black",
+                  height: "580px",
+                  width: "5px",
+                }}
+              ></div>
+            </div>
+            <img
+              src={bombMove ? prof_a : prof_f}
+              alt="prof_a"
+              style={{
+                width: "400px",
+                position: "absolute",
+                top: "400px",
+              }}
+            />
+          </div>
         </div>
       )}
       {showStudF && (
@@ -369,8 +462,10 @@ const Curtain = () => {
         >
           <div
             style={{
-              WebkitAnimation: "vibrate-1 0.3s linear infinite both",
-              animation: "vibrate-1 0.3s linear infinite both",
+              WebkitAnimation: bombMove
+                ? "vibrate-1 0.3s linear infinite both"
+                : "",
+              animation: bombMove ? "vibrate-1 0.3s linear infinite both" : "",
             }}
           >
             <div style={{ display: "flex", paddingLeft: "50px" }}>
@@ -383,7 +478,7 @@ const Curtain = () => {
               ></div>
             </div>
             <img
-              src={stud_f}
+              src={bombMove ? stud_f : stud_a}
               alt="stud_f"
               style={{
                 width: "250px",
