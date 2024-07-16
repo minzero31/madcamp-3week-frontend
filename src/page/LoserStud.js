@@ -8,6 +8,15 @@ const Loser = () => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
+    const audio = new Audio("/losermusic.mp3");
+    audio.play();
+
+    return () => {
+      audio.pause();
+    };
+  }, []);
+
+  useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
     const drops = [];

@@ -12,6 +12,7 @@ const FlipBook = () => {
   const { state, setState, socket } = useContext(Context);
   const [onMouse, setOnMouse] = useState(false);
   const flipbookRef = useRef(null);
+  const audioRef = useRef(null);
   const navigate = useNavigate();
   let index;
   if (state.username === state.roomOwner) {
@@ -22,7 +23,6 @@ const FlipBook = () => {
   // 0이 학생
 
   useEffect(() => {
-    // jQuery와 turn.js를 전역 범위에서 사용할 수 있도록 설정
     if (typeof window !== "undefined") {
       window.jQuery = $;
       window.$ = $;
@@ -31,19 +31,54 @@ const FlipBook = () => {
 
     const flipbook = flipbookRef.current;
 
-    // turn.js 초기화
     $(flipbook).turn({
       width: 800,
       height: 600,
       autoCenter: true,
     });
 
-    // return () => {
-    //   if (flipbook) {
-    //     $(flipbook).turn("destroy").remove();
-    //   }
-    // };
+    const audio = audioRef.current;
+    if (audio) {
+      audio.volume = 0;
+      audio.play().catch((e) => {
+        console.log("Audio play failed: ", e);
+      });
+      let volume = 0;
+      const fadeIn = setInterval(() => {
+        if (volume < 1) {
+          volume = Math.min(volume + 0.01, 1);
+          audio.volume = volume;
+        } else {
+          clearInterval(fadeIn);
+        }
+      }, 50); // 50ms마다 볼륨 증가
+    }
+
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
   }, []);
+
+  const handleButtonClick = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      let volume = audio.volume;
+      const fadeOut = setInterval(() => {
+        if (volume > 0) {
+          volume = Math.max(volume - 0.01, 0);
+          audio.volume = volume;
+        } else {
+          clearInterval(fadeOut);
+          audio.pause();
+          audio.currentTime = 0;
+          navigate("/waiting");
+        }
+      }, 50); // 50ms마다 볼륨 감소
+    }
+  };
 
   const flipbookStyle = {
     width: "800px",
@@ -66,7 +101,7 @@ const FlipBook = () => {
   return (
     <div style={{ backgroundColor: "black" }}>
       <div
-        class="animate__animated animate__fadeIn"
+        className="animate__animated animate__fadeIn"
         style={{
           background: "radial-gradient(circle, white, #F1E4C2, black)",
           height: "100vh",
@@ -76,8 +111,9 @@ const FlipBook = () => {
           overflow: "hidden",
         }}
       >
+        <audio ref={audioRef} src="/flipbookmusic.mp3" loop />
         <div
-          class="animate__animated animate__fadeIn"
+          className="animate__animated animate__fadeIn"
           id="flipbook"
           ref={flipbookRef}
           style={flipbookStyle}
@@ -176,9 +212,7 @@ const FlipBook = () => {
                   paddingLeft: "30px",
                   color: onMouse ? "white" : "black",
                 }}
-                onClick={() => {
-                  navigate("/waiting");
-                }}
+                onClick={handleButtonClick}
                 onMouseOver={() => {
                   setOnMouse(true);
                 }}
