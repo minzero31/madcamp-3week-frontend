@@ -1,5 +1,5 @@
 import React from 'react';
-import loserprof from '../img/loserprof.png'; // 경로를 실제 이미지 경로에 맞게 조정하세요
+import loserprof from '../img/loserprof.jpg'; // 경로를 실제 이미지 경로에 맞게 조정하세요
 
 const LoserProf = () => {
   return (
