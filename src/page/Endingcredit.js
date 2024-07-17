@@ -1,10 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Context } from "../AppProvider";
 
 const EndingCredit = () => {
+  const { state, setState, socket } = useContext(Context);
   const canvasRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
+
+  let index;
+  if (state.username === state.roomOwner) {
+    index = 0;
+  } else {
+    index = 1;
+  }
 
   const [user, setUser] = React.useState("");
 
@@ -30,17 +39,18 @@ const EndingCredit = () => {
     canvas.height = window.innerHeight;
 
     const credits = [
-      "Producer - ha",
-      "Director - haha",
+      "Producer - minzero",
+      "Director - jimini",
       "Developer - jimini, minzero",
       "Special thanx to : class 4 & GPT",
-      "Graphic Designer - hahaha",
-      "Sound Engineer - hahahaha",
-      "Casting Director - hahahahaha",
-      "Camera Operator - hahahahahahahah",
-      "WOWOWOW : " ,
-      "Prof :  "  ,
-      "Student : "
+      "Graphic Designer - ah i want to go home",
+      "Sound Engineer - mp3",
+      "Casting Director - Dad and I",
+      "Camera Operator - none",
+      "Memo : I MISS YOU MOM",
+      "Shout to my dog - I love you",
+      `Prof :  ${index === 1 ? state.username : "opponent"}`,
+      `Student : ${index === 0 ? state.username : "opponent"}`,
     ];
 
     const creditPositions = credits.map((credit, index) => ({
@@ -67,7 +77,7 @@ const EndingCredit = () => {
 
       if (allCreditsOffScreen) {
         setTimeout(() => {
-          navigate('/login');
+          navigate("/login");
         }, 3000); // Navigate to '/login' after 3 seconds
       } else {
         requestAnimationFrame(animate);
