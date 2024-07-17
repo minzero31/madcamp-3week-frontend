@@ -1,5 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import Confetti from 'canvas-confetti';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import 'animate.css';
 import { Context } from '../AppProvider'; // Import the context
 import grad_dgist from '../img/grad_dgist.png';
@@ -17,16 +18,34 @@ import curtainImg from "../img/curtain.png";
 import curtainImg2 from "../img/curtain_2.png";
 
 const WinnerStud = () => {
-  const { state } = useContext(Context); // Use the context to get state
+  const { state } = useContext(Context); 
+  const navigate = useNavigate();
 
   useEffect(() => {
     const audio = new Audio("/winnermusic.mp3");
     audio.play();
 
+    // Function to fade out the music
+    const fadeOut = (audio) => {
+      const fadeAudio = setInterval(() => {
+        if (audio.volume > 0.05) {
+          audio.volume -= 0.05;
+        } else {
+          clearInterval(fadeAudio);
+          audio.pause();
+          navigate('/endingcredit'); 
+        }
+      }, 200); // Reduce volume every 200ms
+    };
+
+    // Set a timer to fade out the music after 20 seconds
+    const timer = setTimeout(() => fadeOut(audio), 20000);
+
     return () => {
+      clearTimeout(timer);
       audio.pause();
     };
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     // Confetti effect every 4 seconds

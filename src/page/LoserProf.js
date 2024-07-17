@@ -1,15 +1,35 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import loserprof from '../img/loserprof.jpg'; // 경로를 실제 이미지 경로에 맞게 조정하세요
 
 const LoserProf = () => {
+  const navigate = useNavigate(); // useNavigate를 사용하여 페이지 전환
+
   useEffect(() => {
     const audio = new Audio("/losermusic.mp3");
     audio.play();
 
+    // 음악을 서서히 줄이는 함수
+    const fadeOut = (audio) => {
+      const fadeAudio = setInterval(() => {
+        if (audio.volume > 0.05) {
+          audio.volume -= 0.05;
+        } else {
+          clearInterval(fadeAudio);
+          audio.pause();
+          navigate('/endingcredit'); // EndingCredits 페이지로 이동
+        }
+      }, 200); // 200ms마다 볼륨 감소
+    };
+
+    // 20초 후에 fadeOut 함수 호출
+    const timer = setTimeout(() => fadeOut(audio), 20000);
+
     return () => {
+      clearTimeout(timer);
       audio.pause();
     };
-  }, []);
+  }, [navigate]);
 
   return (
     <div style={styles.container}>

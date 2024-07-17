@@ -38,8 +38,8 @@ const EndingCredit = () => {
       "Sound Engineer - hahahaha",
       "Casting Director - hahahahaha",
       "Camera Operator - hahahahahahahah",
-      "WOWOWOW : " + user.state,
-      "Prof : ",
+      "WOWOWOW : " ,
+      "Prof :  "  ,
       "Student : "
     ];
 

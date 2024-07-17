@@ -1,20 +1,39 @@
 import React, { useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import 'animate.css';
 import f_score from '../img/f_score.png';
 import loserstud from '../img/loserstud_ending.png';
 import laptop from '../img/laptop.png';
 
-const Loser = () => {
+const LoserStud = () => {
   const canvasRef = useRef(null);
+  const navigate = useNavigate(); // useNavigate를 사용하여 페이지 전환
 
   useEffect(() => {
     const audio = new Audio("/losermusic.mp3");
     audio.play();
 
+    // 음악을 서서히 줄이는 함수
+    const fadeOut = (audio) => {
+      const fadeAudio = setInterval(() => {
+        if (audio.volume > 0.05) {
+          audio.volume -= 0.05;
+        } else {
+          clearInterval(fadeAudio);
+          audio.pause();
+          navigate('/endingcredit'); // EndingCredits 페이지로 이동
+        }
+      }, 200); // 200ms마다 볼륨 감소
+    };
+
+    // 20초 후에 fadeOut 함수 호출
+    const timer = setTimeout(() => fadeOut(audio), 20000);
+
     return () => {
+      clearTimeout(timer);
       audio.pause();
     };
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -161,4 +180,4 @@ const Loser = () => {
   );
 };
 
-export default Loser;
+export default LoserStud;
