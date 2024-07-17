@@ -1,15 +1,38 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import winnerprof from '../img/winnerprof.png'; // 경로를 실제 이미지 경로에 맞게 조정하세요
 
 const WinnerProf = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const audio = new Audio("/winnermusic.mp3");
     audio.play();
 
+    const fadeOutAudio = () => {
+      let volume = 1.0; // 시작 볼륨
+      const fadeInterval = setInterval(() => {
+        if (volume > 0.1) {
+          volume -= 0.1;
+          audio.volume = volume;
+        } else {
+          audio.volume = 0;
+          clearInterval(fadeInterval);
+          audio.pause();
+          navigate('/endingcredit'); // 엔딩 크레딧 화면으로 이동
+        }
+      }, 200); // 200ms마다 볼륨을 줄입니다.
+    };
+
+    const timer = setTimeout(() => {
+      fadeOutAudio();
+    }, 20000); // 20초 후에 페이드 아웃 시작
+
     return () => {
+      clearTimeout(timer);
       audio.pause();
     };
-  }, []);
+  }, [navigate]);
 
   return (
     <div style={styles.container}>
