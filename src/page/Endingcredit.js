@@ -39,6 +39,7 @@ const EndingCredit = () => {
     canvas.height = window.innerHeight;
 
     const credits = [
+      "Title - Casting",
       "Producer - minzero",
       "Director - jimini",
       "Developer - jimini, minzero",
@@ -46,7 +47,6 @@ const EndingCredit = () => {
       "Graphic Designer - ah i want to go home",
       "Sound Engineer - mp3",
       "Casting Director - Dad and I",
-      "Camera Operator - none",
       "Memo : I MISS YOU MOM",
       "Shout to my dog - I love you",
       `Prof :  ${index === 1 ? state.username : "opponent"}`,
