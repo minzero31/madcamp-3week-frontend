@@ -13,8 +13,7 @@ import Waiting from "./page/Waiting";
 
 function App() {
   return (
-    // basename={process.env.PUBLIC_URL}
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path="/" element={<Loading />} />
         <Route path="/login" element={<Login />} />
