@@ -29,6 +29,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
+  "homepage": "https://minzero31.github.io/madcamp-3week-frontend/",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -46,6 +47,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "homepage": "https://minzero31.github.io/madcamp-3week-frontend/"
+  }
 }
