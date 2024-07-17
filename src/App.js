@@ -10,7 +10,6 @@ import Curtain from "./page/Curtain";
 import Ready from "./page/Ready";
 import FlipBook from "./page/FlipBook";
 import Waiting from "./page/Waiting";
-import Practice from "./page/Practice";
 
 function App() {
   return (
@@ -27,7 +26,6 @@ function App() {
         <Route path="/loserprof" element={<LoserProf />} />
         <Route path="/loserstud" element={<LoserStud />} />
         <Route path="/endingcredit" element={<EndingCredit />} />
-        <Route path="/practice" element={<Practice />} />
       </Routes>
     </BrowserRouter>
   );
