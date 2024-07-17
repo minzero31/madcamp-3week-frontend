@@ -132,7 +132,7 @@ const FlipBook = () => {
               style={{
                 fontFamily: "Alice, sans-serif",
                 fontWeight: "bold",
-                fontSize: "35px",
+                fontSize: "50px",
                 marginBottom: "10px",
               }}
             >
@@ -141,24 +141,24 @@ const FlipBook = () => {
             <div
               style={{
                 fontFamily: "Alice, sans-serif",
-                fontSize: "15px",
+                fontSize: "25px",
                 marginBottom: "85px",
               }}
             >
               by{" "}
-              <span style={{ fontSize: "17px", fontFamily: "InkLipquid" }}>
+              <span style={{ fontSize: "25px", fontFamily: "InkLipquid" }}>
                 김민영
               </span>
             </div>
             <div
               style={{
                 fontFamily: "Alice, sans-serif",
-                fontSize: "15px",
+                fontSize: "25px",
                 fontWeight: "-moz-initial",
               }}
             >
               revision by{" "}
-              <span style={{ fontSize: "17px", fontFamily: "InkLipquid" }}>
+              <span style={{ fontSize: "25px", fontFamily: "InkLipquid" }}>
                 임지민
               </span>
             </div>
