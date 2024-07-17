@@ -12,6 +12,7 @@ import curtainImg2 from "../img/curtain_2.png";
 import hill from "../img/hill.png";
 import { Context } from "../AppProvider";
 import { useNavigate } from "react-router-dom";
+import Zzan from "./Zzan";
 
 const Curtain = () => {
   const navigate = useNavigate();
@@ -24,6 +25,8 @@ const Curtain = () => {
   const [studentAnimation, setStudentAnimation] = useState("");
   const [professorAnimation, setProfessorAnimation] = useState("");
   const [pictureChange, setPictureChange] = useState(null);
+
+  const [zzan, setZzan] = useState(false);
 
   const studentAnimationHandler = (inAnimation) => {
     setStudentAnimation(
@@ -151,6 +154,45 @@ const Curtain = () => {
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [amIHoldBomb]);
+
+  useEffect(() => {
+    const handleHaha = () => {
+      console.log("Received 'haha' event");
+      setZzan(true);
+      setTimeout(() => {
+        setZzan(false);
+      }, 2000);
+    };
+
+    socket.on("haha", handleHaha);
+
+    return () => {
+      socket.off("haha", handleHaha);
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log("zzan state changed:", zzan);
+  }, [zzan]);
+
+  useEffect(() => {
+    const handleKeyDown2 = (event) => {
+      if (event.code === "Space") {
+        if (!amIHoldBomb) {
+          socket.emit("spotlight", {
+            roomOwner: state.roomOwner,
+            index: index,
+          });
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown2);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown2);
     };
   }, [amIHoldBomb]);
 
@@ -301,6 +343,24 @@ const Curtain = () => {
 
   return (
     <div style={{ overflow: "hidden" }}>
+      {zzan ? (
+        <div
+          style={{
+            zIndex: 50,
+            backgroundColor: "white",
+            width: "100%",
+            height: "100vh",
+            position: "fixed",
+            top: 0,
+            left: 0,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Zzan />
+        </div>
+      ) : null}
       {hillMotion ? (
         <img
           src={hill}

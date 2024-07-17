@@ -176,10 +176,8 @@ const FlipBook = () => {
             <img src={comic4} alt="comic1" style={{ width: "80%" }} />
           </div>
           <div style={pageStyle}>
-            <div>
-              당신은
-              {index === 0 ? "학생" : "교수"} 입니다.
-            </div>
+            <div>당신은 {index === 0 ? " 학생" : " 교수"} 입니다.</div>
+            {/* <div>처음 화면을 클릭 후 엔터키를 통해 학점을 바꾸세요!</div> */}
           </div>
           <div style={pageStyle}>
             <div
