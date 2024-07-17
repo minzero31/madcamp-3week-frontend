@@ -19,7 +19,7 @@ const Curtain = () => {
   const { state, setState, socket } = useContext(Context);
   const [amIHoldBomb, setAmIHoldBomb] = useState();
   const [bombMove, setBombMove] = useState(false);
-  const [bombTimer, setBombTimer] = useState(60);
+  const [bombTimer, setBombTimer] = useState(40);
   const [changeListener, setChangeListener] = useState(0);
 
   const [studentAnimation, setStudentAnimation] = useState("");
@@ -101,9 +101,6 @@ const Curtain = () => {
         studentAnimationHandler(true);
         professorAnimationHandler(true);
       }, 1000);
-      // if (bombTimer < data.bombTimer) {
-      //   setBombTimer(data.bombTimer);
-      // }
     });
   }, []);
 
@@ -116,17 +113,17 @@ const Curtain = () => {
             clearInterval(timer);
             if (amIHoldBomb) {
               if (index === 0) {
-                navigate("/loserstud");
+                navigate("/loserprof");
               }
               if (index === 1) {
-                navigate("/loserprof");
+                navigate("/loserstud");
               }
             } else {
               if (index === 0) {
-                navigate("/winnerstud");
+                navigate("/winnerprof");
               }
               if (index === 1) {
-                navigate("/winnerprof");
+                navigate("/winnerstud");
               }
             }
             return 0;
@@ -147,7 +144,7 @@ const Curtain = () => {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "Enter" && canPressEnter) {
+      if (event.key === "Enter" && canPressEnter && !zzan) {
         if (amIHoldBomb) {
           socket.emit("exchange_bomb", {
             roomOwner: state.roomOwner,
