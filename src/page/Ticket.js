@@ -36,9 +36,11 @@ const Ticket = () => {
             paddingBottom: "15px",
             fontWeight: "bold",
             letterSpacing: "3px",
+            paddingLeft: "50px",
+            paddingRight: "40px",
           }}
         >
-          Movie Night
+          Casting
         </div>
         <div style={{ fontFamily: "Alice, sans-serif" }}>Valid Until</div>
         <div
@@ -48,7 +50,7 @@ const Ticket = () => {
             fontFamily: "Alice, sans-serif",
           }}
         >
-          15 Februrary, 2025
+          17 July, 2024
         </div>
       </div>
       <div style={{ height: "100%", width: "3px", borderLeftStyle: "dotted" }}>

@@ -27,6 +27,7 @@ const Curtain = () => {
   const [pictureChange, setPictureChange] = useState(null);
 
   const [zzan, setZzan] = useState(false);
+  const [zzanAnimation, setZzanAnimation] = useState("");
 
   const studentAnimationHandler = (inAnimation) => {
     setStudentAnimation(
@@ -161,9 +162,11 @@ const Curtain = () => {
     const handleHaha = () => {
       console.log("Received 'haha' event");
       setZzan(true);
+      setZzanAnimation("animate__fadeIn");
       setTimeout(() => {
+        setZzanAnimation("animate__fadeOut");
         setZzan(false);
-      }, 2000);
+      }, 1200);
     };
 
     socket.on("haha", handleHaha);
@@ -345,6 +348,7 @@ const Curtain = () => {
     <div style={{ overflow: "hidden" }}>
       {zzan ? (
         <div
+          class={`animate__animated ${zzanAnimation}`}
           style={{
             zIndex: 50,
             backgroundColor: "white",
