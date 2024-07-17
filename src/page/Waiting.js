@@ -10,6 +10,7 @@ const Waiting = () => {
   const { state, setState, socket } = useContext(Context);
   const [readyCount, setReadyCount] = useState(0);
   const [canClick, setCanClick] = useState(true);
+  const [rUReady, setRUReady] = useState(false);
 
   useEffect(() => {
     socket.on("ready_count_updated", (data) => {
@@ -28,6 +29,7 @@ const Waiting = () => {
 
   useEffect(() => {
     if (readyCount === 2) {
+      setRUReady(true);
       setTimeout(() => {
         navigate("/curtain");
       }, 3000);
@@ -109,12 +111,12 @@ const Waiting = () => {
         <div style={{ fontSize: "18px", fontWeight: "bold", color: "#525252" }}>
           {" "}
           {/* 55px / 3 */}
-          Ready {readyCount}/2
+          {rUReady ? "Starting..." : `Ready ${readyCount}/2`}
         </div>
       </div>
       <div style={{ paddingTop: "317px", zIndex: 1 }}>
         {" "}
-        {/* 950px / 3 */}
+        `{/* 950px / 3 */}
         <img
           src={waitingLineRight}
           style={{ height: "110%" }}
