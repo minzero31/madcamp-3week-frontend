@@ -102,41 +102,44 @@ const Curtain = () => {
         professorAnimationHandler(true);
       }, 1000);
     });
+
+    return () => {
+      socket.off("bomb_holder_updated"); // Cleanup the event listener
+    };
   }, []);
 
   useEffect(() => {
     let timer;
     if (bombTimer !== null && bombTimer > 0) {
       timer = setInterval(() => {
-        setBombTimer((prevTimer) => {
-          if (prevTimer <= 1) {
-            clearInterval(timer);
-            if (amIHoldBomb) {
-              if (index === 0) {
-                navigate("/loserprof");
-              }
-              if (index === 1) {
-                navigate("/loserstud");
-              }
-            } else {
-              if (index === 0) {
-                navigate("/winnerprof");
-              }
-              if (index === 1) {
-                navigate("/winnerstud");
-              }
-            }
-            return 0;
-          }
-          return prevTimer - 1;
-        });
+        setBombTimer((prevTimer) => prevTimer - 1);
       }, 1000);
     }
 
     return () => {
       if (timer) clearInterval(timer);
     };
-  }, [bombTimer, amIHoldBomb]);
+  }, [bombTimer]);
+
+  useEffect(() => {
+    if (bombTimer === 0) {
+      if (amIHoldBomb) {
+        if (index === 0) {
+          navigate("/loserprof");
+        }
+        if (index === 1) {
+          navigate("/loserstud");
+        }
+      } else {
+        if (index === 0) {
+          navigate("/winnerprof");
+        }
+        if (index === 1) {
+          navigate("/winnerstud");
+        }
+      }
+    }
+  }, [bombTimer, amIHoldBomb, index, navigate]);
 
   useEffect(() => {
     console.log("canPressEnter : " + canPressEnter);
@@ -354,7 +357,7 @@ const Curtain = () => {
     <div style={{ overflow: "hidden" }}>
       {zzan ? (
         <div
-          class={`animate__animated ${zzanAnimation}`}
+          className={`animate__animated ${zzanAnimation}`}
           style={{
             zIndex: 50,
             backgroundColor: "white",
@@ -374,7 +377,7 @@ const Curtain = () => {
       {hillMotion ? (
         <img
           src={hill}
-          class="animate__animated animate__bounceInUp"
+          className="animate__animated animate__bounceInUp"
           style={{
             position: "fixed",
             bottom: 0,
@@ -388,7 +391,7 @@ const Curtain = () => {
       {curtainMotion ? (
         <>
           <img
-            class="animate__animated animate__bounceInLeft"
+            className="animate__animated animate__bounceInLeft"
             src={curtainImg}
             style={{
               position: "fixed",
@@ -399,7 +402,7 @@ const Curtain = () => {
             }}
           />
           <img
-            class="animate__animated animate__bounceInRight"
+            className="animate__animated animate__bounceInRight"
             src={curtainImg2}
             style={{
               position: "fixed",
@@ -546,7 +549,7 @@ const Curtain = () => {
           }}
         >
           <div
-            class={`animate__animated ${professorAnimation}`}
+            className={`animate__animated ${professorAnimation}`}
             // style={{
             //   WebkitAnimation: bombMove
             //     ? ""
@@ -590,7 +593,7 @@ const Curtain = () => {
           }}
         >
           <div
-            class={`animate__animated ${studentAnimation}`}
+            className={`animate__animated ${studentAnimation}`}
             // style={{
             //   WebkitAnimation: bombMove
             //     ? "vibrate-1 0.3s linear infinite both"

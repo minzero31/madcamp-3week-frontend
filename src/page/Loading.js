@@ -30,7 +30,7 @@ const Loading = () => {
     >
       <div
         style={{ marginTop: "290px", marginLeft: "60px" }}
-        class={
+        className={
           animation
             ? "animate__animated animate__slideOutLeft"
             : "animate__animated animate__slideInRight"
