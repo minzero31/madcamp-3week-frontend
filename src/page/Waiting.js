@@ -9,15 +9,21 @@ const Waiting = () => {
   const navigate = useNavigate();
   const { state, setState, socket } = useContext(Context);
   const [readyCount, setReadyCount] = useState(0);
+  const [canClick, setCanClick] = useState(true);
 
   useEffect(() => {
     socket.on("ready_count_updated", (data) => {
       setReadyCount(data.ready_count);
     });
+
+    socket.emit("get_ready_list", { roomOwner: state.roomOwner });
   }, []);
 
   const handleEntranceClick = () => {
-    socket.emit("ready_clicked", { roomOwner: state.roomOwner });
+    if (canClick) {
+      socket.emit("ready_clicked", { roomOwner: state.roomOwner });
+      setCanClick(false);
+    }
   };
 
   useEffect(() => {

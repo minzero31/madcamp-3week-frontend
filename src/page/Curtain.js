@@ -28,6 +28,7 @@ const Curtain = () => {
 
   const [zzan, setZzan] = useState(false);
   const [zzanAnimation, setZzanAnimation] = useState("");
+  const [canPressEnter, setCanPressEnter] = useState(true);
 
   const studentAnimationHandler = (inAnimation) => {
     setStudentAnimation(
@@ -141,13 +142,21 @@ const Curtain = () => {
   }, [bombTimer, amIHoldBomb]);
 
   useEffect(() => {
+    console.log("canPressEnter : " + canPressEnter);
+  }, [canPressEnter]);
+
+  useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.key === "Enter") {
+      if (event.key === "Enter" && canPressEnter) {
         if (amIHoldBomb) {
           socket.emit("exchange_bomb", {
             roomOwner: state.roomOwner,
           });
         }
+        setCanPressEnter(false);
+        setTimeout(() => {
+          setCanPressEnter(true);
+        }, 3000); // 3초 후에 다시 Enter 키를 누를 수 있게 함
       }
     };
 
@@ -156,7 +165,7 @@ const Curtain = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [amIHoldBomb]);
+  }, [amIHoldBomb, canPressEnter]);
 
   useEffect(() => {
     const handleHaha = () => {
