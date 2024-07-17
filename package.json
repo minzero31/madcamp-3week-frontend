@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^13.5.0",
     "animate.css": "^4.1.1",
     "canvas-confetti": "^1.9.3",
+    "gh-pages": "^6.1.1",
     "jquery": "^1.12.0",
     "lottie-react": "^2.4.0",
     "react": "^18.3.1",
@@ -28,6 +29,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
+  "homepage": "https://minzero31.github.io/madcamp-3week-frontend/",
   "eslintConfig": {
     "extends": [
       "react-app",
@@ -45,6 +47,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "homepage": "https://minzero31.github.io/madcamp-3week-frontend/"
+  }
 }
