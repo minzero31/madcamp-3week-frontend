@@ -38,7 +38,7 @@ const Waiting = () => {
 
   return (
     <div
-      class="animate__animated animate__fadeIn"
+      className="animate__animated animate__fadeIn"
       style={{
         display: "flex",
         height: "100vh",

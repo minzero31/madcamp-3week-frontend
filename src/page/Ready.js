@@ -99,7 +99,7 @@ const Ready = () => {
   return (
     <div style={{ backgroundColor: "black" }}>
       <div
-        class="animate__animated animate__fadeIn"
+        className="animate__animated animate__fadeIn"
         style={{
           position: "relative",
           height: "100vh",
@@ -109,7 +109,7 @@ const Ready = () => {
         }}
       >
         <div
-          class="animate__animated animate__bounceInDown"
+          className="animate__animated animate__bounceInDown"
           style={{
             position: "absolute",
             left: "1050px",
@@ -146,7 +146,7 @@ const Ready = () => {
         {isAnimationApplied ? (
           <>
             <div
-              class="animate__animated animate__bounceInDown"
+              className="animate__animated animate__bounceInDown"
               style={{
                 position: "absolute",
                 left: "1200px",
@@ -182,7 +182,7 @@ const Ready = () => {
               />
             </div>
             <div
-              class="animate__animated animate__bounceInDown"
+              className="animate__animated animate__bounceInDown"
               style={{
                 position: "absolute",
                 left: "1260px",
@@ -312,7 +312,7 @@ const Ready = () => {
               >
                 {roomList.length !== 0 ? (
                   roomList.map((room_name) => {
-                    return <RoomList name={room_name} />;
+                    return <RoomList key={room_name} name={room_name} />;
                   })
                 ) : (
                   <div
