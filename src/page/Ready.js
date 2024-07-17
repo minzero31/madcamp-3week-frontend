@@ -128,7 +128,7 @@ const Ready = () => {
             <div
               style={{
                 backgroundColor: "black",
-                height: "357px",
+                height: "359px",
                 width: "3px",
               }}
             ></div>
@@ -159,7 +159,7 @@ const Ready = () => {
                 <div
                   style={{
                     backgroundColor: "black",
-                    height: "300px",
+                    height: "306px",
                     width: "3px",
                   }}
                 ></div>
@@ -195,7 +195,7 @@ const Ready = () => {
                 <div
                   style={{
                     backgroundColor: "black",
-                    height: "300px",
+                    height: "306px",
                     width: "3px",
                   }}
                 ></div>

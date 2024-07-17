@@ -233,7 +233,7 @@ const Login = () => {
                     paddingTop: "15px",
                   }}
                 >
-                  Movie Night
+                  Casting
                 </div>
                 <div
                   style={{
@@ -438,7 +438,7 @@ const Login = () => {
                           textAlign: "center",
                         }}
                       >
-                        Kaist Goose 1
+                        Kaist Duck 1
                       </div>
                     </div>
                     <div style={{ width: "120px" }}>
@@ -471,7 +471,7 @@ const Login = () => {
                           textAlign: "center",
                         }}
                       >
-                        Kaist Goose 2
+                        Kaist Duck 2
                       </div>
                     </div>
                   </div>
